@@ -1,29 +1,39 @@
-# Support Ticket Triage System
+# Support Ticket Triage Agent (HackerRank Orchestrate 2026)
 
 ## Overview
 
-This project is a deterministic support ticket triage system built for the HackerRank AI challenge.
+This project is a deterministic support ticket triage agent built for the HackerRank Orchestrate hackathon.
 
-It processes incoming support tickets and:
-- Classifies them into request type and product area
+The system processes real-world support tickets across three ecosystems:
+- HackerRank
+- Claude
+- Visa
+
+For each ticket, it:
+- Classifies the request
 - Retrieves relevant documentation
-- Generates grounded responses
+- Generates a grounded response
 - Decides whether to reply or escalate
 
-The system is designed to prioritize **correctness, consistency, and explainability** over generative flexibility.
+The system prioritizes **correctness, safety, and explainability** over generative flexibility.
 
 ---
 
-## Problem Statement
+## Problem
 
-Support teams spend significant time:
-- Reading and understanding tickets
-- Finding relevant documentation
-- Deciding whether to resolve or escalate
+Support teams handle large volumes of tickets involving:
+- Billing issues
+- Account access
+- Security concerns
+- Product usage queries
 
-A naive AI solution may generate fluent responses but risks **hallucination and incorrect guidance**, which is unacceptable in support workflows.
+A naive AI system may generate fluent responses but risks:
+- Hallucination
+- Incorrect guidance
+- Unsafe decisions
 
-This project focuses on building a **reliable and auditable triage system**.
+This project focuses on building a **reliable triage system** that:
+> Answers when safe, escalates when uncertain.
 
 ---
 
@@ -31,17 +41,18 @@ This project focuses on building a **reliable and auditable triage system**.
 
 The system follows a structured pipeline:
 
-### 1. Input Processing
-- Cleans and normalizes ticket text
-- Removes noise (links, markdown, formatting)
+### 1. Preprocessing
+- Cleans ticket text
+- Removes noise and formatting
+- Normalizes input for consistent processing
 
 ---
 
 ### 2. Classification
-- Rule-based classification (no ML model)
+- Rule-based classifier (no ML model)
 - Outputs:
-  - `request_type` (product_issue, bug, invalid, etc.)
-  - `product_area` (billing, security, screen, etc.)
+  - `request_type` (product_issue, bug, invalid)
+  - `product_area` (billing, security, team_and_enterprise, etc.)
 
 Why rule-based?
 - Deterministic
@@ -51,68 +62,65 @@ Why rule-based?
 ---
 
 ### 3. Retrieval
-- Uses keyword/token overlap (BM25-style)
-- Retrieves top relevant documents
+
+- Keyword-based retrieval (BM25-style scoring)
+- Uses local documentation corpus (no external APIs)
 
 #### Query Expansion
 - Adds synonyms (e.g. login ↔ access, billing ↔ payment)
-- Improves recall for vocabulary mismatch
+- Improves recall for varied user phrasing
 
 ---
 
-### 4. Chunking Strategy
-- Documents split into:
-  - 1200 character chunks
-  - 200 character overlap
+### 4. Document Chunking
+- 1200 character chunks
+- 200 character overlap
 
-Why?
-- Maintains context
-- Prevents boundary information loss
-- Works better than inconsistent paragraph splits
+Ensures:
+- Context preservation
+- No information loss at boundaries
 
 ---
 
 ### 5. Sentence Extraction & Scoring
 
-Instead of returning full chunks, the system:
-- Splits documents into sentences
-- Scores each sentence
+Instead of returning full documents:
+- Extracts sentences
+- Scores them using:
 
-#### Scoring signals:
+Signals:
 - Keyword overlap with ticket
-- Presence of actionable verbs (click, update, contact)
+- Actionable language (click, update, contact)
 - Penalties for:
   - headings
-  - noisy text
-  - overly long sentences
+  - noise
+  - overly long text
 
-Top 1–2 sentences are selected.
+Selects top 1–2 sentences.
 
 ---
 
 ### 6. Response Validation
 
-Ensures quality by rejecting:
-- Incomplete sentences ("Click the...")
+Filters out:
+- Incomplete responses ("Click the...")
 - Headings or titles
-- Irrelevant or low-overlap content
+- Irrelevant or weak matches
 - Noisy or malformed text
 
-If validation fails → fallback or escalation
+Ensures only **usable support responses** are returned.
 
 ---
 
-### 7. Routing (Reply vs Escalate)
+### 7. Routing Logic (Reply vs Escalate)
 
-The system decides:
-
-#### Reply if:
+#### Reply when:
 - Strong retrieval match
 - Valid response
 
-#### Escalate if:
+#### Escalate when:
 - Admin / permission issues
-- Security / fraud
+- Fraud / security concerns
 - Compliance / infosec
 - Low confidence
 
@@ -121,19 +129,23 @@ Key principle:
 
 ---
 
-### 8. Output Generation
+### 8. Output
 
-Each ticket produces:
+Each ticket generates:
 
-- status (replied / escalated)
-- product_area
-- response
-- justification
-- request_type
+| Field | Description |
+|------|------------|
+| status | replied / escalated |
+| product_area | classified domain |
+| response | user-facing answer |
+| justification | reasoning for decision |
+| request_type | type of request |
 
-Saved in:
-- `output.csv`
-- `debug_output.csv` (for traceability)
+Outputs saved to:
+
+support_tickets/output.csv
+support_tickets/debug_output.csv
+
 
 ---
 
@@ -141,23 +153,24 @@ Saved in:
 
 status: escalated
 product_area: team_and_enterprise
-response: This request requires support assistance because access is managed by your organization’s admin.
+response: This request requires support assistance because access is managed by your organization's admin.
 justification: Account, workspace, admin, or permission changes require human support review.
 request_type: product_issue
+
 
 ---
 
 ## AI Usage
 
-AI was used in two ways:
+AI was used in:
 
-### 1. Development Phase
-- Debugging errors
-- Refining response logic
-- Designing validation rules
+### Development
+- Debugging logic
+- Designing validation layers
+- Improving response quality
 
-### 2. Optional Runtime Integration
-- Local AI model (Ollama) tested for response generation
+### Runtime (Optional)
+- Local AI (Ollama) tested for response generation
 - Only used if:
   - Output is validated
   - No hallucination risk
@@ -169,13 +182,13 @@ Final system remains:
 
 ## Design Philosophy
 
-### Priorities:
-- Correctness
-- Consistency
-- Explainability
+### Priorities
+- Correctness over fluency
+- Safety over coverage
+- Explainability over complexity
 
-### Trade-off:
-- Less fluent responses
+### Trade-offs
+- Less conversational responses
 - More reliable behavior
 
 ---
@@ -183,59 +196,123 @@ Final system remains:
 ## Key Features
 
 - Deterministic pipeline (no black-box decisions)
-- Grounded responses (no hallucination)
-- Query expansion for better retrieval
-- Sentence-level scoring (not raw chunk output)
+- Grounded responses from documentation
+- Query expansion for better recall
+- Sentence-level scoring
 - Strong validation layer
-- Safe escalation logic
+- Safe escalation handling
 - Debug traceability
 
 ---
 
 ## Limitations
 
-- Keyword-based retrieval (not semantic)
+- Keyword-based retrieval (no embeddings)
 - No learning or feedback loop
-- Single-step agent (no planning)
+- Single-pass pipeline (no multi-step reasoning)
 - Limited handling of complex paraphrasing
 
 ---
 
 ## Future Improvements
 
-- Embedding-based semantic retrieval
+- Semantic retrieval (embeddings)
+- Cross-encoder reranking
 - Learning from past tickets
-- Better ranking (cross-encoder)
-- Controlled LLM-based response generation
-- Multi-step agent behavior
+- Controlled LLM generation
+- Multi-step agent workflows
 
 ---
 
-## Why This Approach?
+## Project Structure
 
-Instead of building a fully generative system, this project treats the problem as:
+.
+├── code/
+│ ├── main.py
+│ ├── agent.py
+│ ├── classifier.py
+│ ├── retrieval.py
+│ ├── responder.py
+│ └── utils.py
+│
+├── data/
+│ └── docs.zip # compressed documentation corpus
+│
+├── support_tickets/
+│ ├── input_sample.csv
+│ ├── output_sample.csv
+│ └── debug_output.csv
+│
+└── README.md
 
-> A decision-making system, not a chatbot
+
+---
+
+## Setup
+
+### 1. Clone repo
+
+```bash
+git clone https://github.com/adityaarulmanalan/hackerrankHackathon_triageAgent.git
+cd hackerrankHackathon_triageAgent
+```
+
+
+### 2. Unzip documentation corpus
+
+```bash
+unzip data/docs.zip -d data/
+
+```
+
+---
+
+### 3. Run
+
+```bash
+python3 code/main.py run
+```
+
+### Why This Approach?
+
+Instead of building a purely generative system, this project treats triage as:
+
+A decision-making system, not a chatbot
 
 This ensures:
-- Predictable outputs
-- Easier debugging
-- Production-like reliability
+
+Predictable outputs
+Easier debugging
+Production-like reliability
 
 ---
-
-## Conclusion
+Conclusion
 
 This system demonstrates how combining:
-- retrieval
-- scoring
-- validation
-- routing
 
-can produce a **reliable and explainable support agent** without relying entirely on LLMs.
+retrieval
+scoring
+validation
+routing
+
+can produce a robust and explainable support agent without relying entirely on LLMs.
+
+Author
+
+Aditya Arul Manalan
+
 
 ---
 
-## Author
+## This README does 3 important things
 
-Aditya Arul Manalan
+- Matches **HackerRank expectations**
+- Sounds **engineer-level (not student-level)**
+- Gives you **answers for interview questions automatically**
+
+---
+
+If you want next:
+👉 I can give you **perfect answers for the remaining interview questions**  
+👉 or simulate a **full mock interview (hard mode)**
+::contentReference[oaicite:1]{index=1}
