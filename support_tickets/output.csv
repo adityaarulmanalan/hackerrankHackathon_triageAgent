@@ -1,0 +1,30 @@
+status,product_area,response,justification,request_type
+escalated,team_and_enterprise,This request requires support assistance because access is managed by your organization's admin.,"Account, workspace, admin, seat, or permission changes require human support review.",product_issue
+replied,screen,The platform should not have graded you unfairly as it is based on a cut-off score of 75 points.,Relevant local documentation supports a direct answer (score 51.958).,product_issue
+replied,transactions_and_disputes,"If you have questions about. Visa’s rules, please contact us at [support team.",Relevant local documentation supports a direct answer (score 74.507).,product_issue
+replied,interviews,"Refund policy If you accidentally make a purchase or are not satisfied with your mock interview, contact help@hackerrank.com.",Relevant local documentation supports a direct answer (score 52.148).,product_issue
+replied,billing,You can pause your subscription from the billing settings in your account.,Relevant local documentation supports a direct answer (score 22.928).,product_issue
+escalated,security_compliance,This request requires support assistance because compliance and security forms are handled manually.,"Security, compliance, vendor, or infosec form requests require human support review.",product_issue
+replied,community,You need to install QuickApply to see the 'Apply' tab.,Relevant local documentation supports a direct answer (score 17.881).,product_issue
+replied,screen,You can manage this request from the relevant settings in your account or contact support if the option is not available.,Relevant local documentation supports a direct answer (score 27.626).,product_issue
+escalated,screen,This request requires support assistance as it is not clearly covered by the available documentation.,"Bug, outage, error, or platform failure requires investigation by support.",bug
+escalated,screen,This request requires support assistance as it is not clearly covered by the available documentation.,Feature requests require product or support-team review.,feature_request
+escalated,screen,This request requires support assistance as it is not clearly covered by the available documentation.,Session timeout or inactivity behavior requires support review.,product_issue
+escalated,out_of_scope,This request requires support assistance as it is not clearly covered by the available documentation.,The company or support domain is unclear.,product_issue
+replied,interviews,You can manage this request from the relevant settings in your account or contact support if the option is not available.,Relevant local documentation supports a direct answer (score 29.081).,product_issue
+replied,billing,You can pause your subscription from the billing settings in your account.,Relevant local documentation supports a direct answer (score 43.376).,product_issue
+replied,out_of_scope,"Claude has stopped working completely, all requests are failing.",Relevant local documentation supports a direct answer (score 36.981).,product_issue
+escalated,fraud_and_lost_cards,This request requires support assistance because sensitive account safety issues are reviewed by our security team.,"Sensitive security, privacy, legal, fraud, or payment-risk issue requires human review.",product_issue
+replied,community,You can manage this request from the relevant settings in your account or contact support if the option is not available.,Relevant local documentation supports a direct answer (score 51.483).,product_issue
+replied,screen,"Yes, you can update your name on your certificate once per account.",Relevant local documentation supports a direct answer (score 40.513).,product_issue
+replied,transactions_and_disputes,"To dispute a charge, contact. Visa's customer support at +1 303 967 1096 or use the freephone numbers for your country/region.",Relevant local documentation supports a direct answer (score 44.691).,product_issue
+escalated,out_of_scope,This request requires support assistance as it is not clearly covered by the available documentation.,"Bug, outage, error, or platform failure requires investigation by support.",bug
+replied,privacy_and_legal,Claude's web crawling by configuring your site's robots.txt to allow or block.,Relevant local documentation supports a direct answer (score 47.814).,product_issue
+replied,visa_support,You can report lost or stolen. Visa cards and request emergency services by calling the GCAS number.,Relevant local documentation supports a direct answer (score 52.518).,product_issue
+replied,privacy_and_legal,"Data will be deleted after 30 days, but will be cached for a number of hours so users can access context in recently closed out documents.",Relevant local documentation supports a direct answer (score 54.554).,product_issue
+escalated,out_of_scope,This request requires support assistance as it is not clearly covered by the available documentation.,The company or support domain is unclear.,product_issue
+escalated,fraud_and_lost_cards,This request requires support assistance because sensitive account safety issues are reviewed by our security team.,"Sensitive security, privacy, legal, fraud, or payment-risk issue requires human review.",product_issue
+replied,out_of_scope,You can manage this request from the relevant settings in your account or contact support if the option is not available.,Relevant local documentation supports a direct answer (score 38.428).,product_issue
+replied,community,"To remove an employee from your. Hackerrank hiring account after they've left the company, please contact support to assist with the process.",Relevant local documentation supports a direct answer (score 30.464).,product_issue
+replied,api_and_console,This request requires support assistance as it is not clearly covered by the available documentation.,Relevant local documentation supports a direct answer (score 44.324).,product_issue
+replied,transactions_and_disputes,"Islands, merchants may require a minimum transaction amount of $10 for credit cards.",Relevant local documentation supports a direct answer (score 142.378).,product_issue
