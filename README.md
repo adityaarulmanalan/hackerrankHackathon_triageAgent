@@ -303,16 +303,3 @@ Aditya Arul Manalan
 
 
 ---
-
-## This README does 3 important things
-
-- Matches **HackerRank expectations**
-- Sounds **engineer-level (not student-level)**
-- Gives you **answers for interview questions automatically**
-
----
-
-If you want next:
-👉 I can give you **perfect answers for the remaining interview questions**  
-👉 or simulate a **full mock interview (hard mode)**
-::contentReference[oaicite:1]{index=1}
